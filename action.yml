@@ -34,7 +34,7 @@ runs:
     
     - name: Run Code Review GPT
       shell: bash
-      run: npx code-review-gpt review --ci=github --model=$MODEL --reviewType={{ inputs.REVIEW_TYPE }}
+      run: npx code-review-gpt review --ci=github --model=$MODEL --reviewType=$REVIEW_TYPE
       
       env:
         MODEL: ${{ inputs.MODEL }}
