@@ -5,13 +5,20 @@ inputs:
   MODEL:
     description: 'The GPT model to use'
     required: true
-    default: 'gpt-3.5-turbo'
+    default: 'gpt-4'
   OPENAI_API_KEY:
     description: 'OpenAI API Key'
     required: true
   GITHUB_TOKEN:
     description: 'Github token'
     required: true
+  REVIEW_TYPE:
+    description: 'The type of review content to feed to the model'
+    required: false
+    default: 'full'
+    options:
+      - 'full'
+      - 'changed'
 runs:
   using: 'composite'
   steps:
@@ -27,7 +34,7 @@ runs:
     
     - name: Run Code Review GPT
       shell: bash
-      run: npx code-review-gpt review --ci=github --model=$MODEL
+      run: npx code-review-gpt review --ci=github --model=$MODEL --reviewType={{ inputs.REVIEW_TYPE }}
       
       env:
         MODEL: ${{ inputs.MODEL }}
