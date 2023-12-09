@@ -19,6 +19,14 @@ inputs:
     options:
       - 'full'
       - 'changed'
+  NODE_AUTH_TOKEN:
+    description: 'Node Auth Token'
+    required: false
+    default: ''
+  NODE_VERSION:
+    description: 'Node Version'
+    required: false
+    default: '18.18.2'
 runs:
   using: 'composite'
   steps:
@@ -26,11 +34,13 @@ runs:
 
     - uses: actions/setup-node@v3
       with:
-        node-version: 18.18.2
+        node-version: ${{ inputs.NODE_VERSION }}
 
     - name: Install Code Review GPT
       shell: bash
-      run: npm install code-review-gpt
+      run: npm install code-review-gpt --force
+      env:
+        NODE_AUTH_TOKEN: ${{ inputs.NODE_AUTH_TOKEN }}
     
     - name: Run Code Review GPT
       shell: bash
@@ -42,6 +52,7 @@ runs:
         BASE_SHA: ${{ github.event.pull_request.base.sha }}
         GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
         REVIEW_TYPE: ${{ inputs.REVIEW_TYPE }}
+        NODE_AUTH_TOKEN: ${{ inputs.NODE_AUTH_TOKEN }}
 
 branding:
   icon: 'code'
