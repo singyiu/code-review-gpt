@@ -38,7 +38,7 @@ runs:
 
     - name: Install Code Review GPT
       shell: bash
-      run: npm install code-review-gpt --force
+      run: npm install code-review-gpt --force --legacy-peer-deps
       env:
         NODE_AUTH_TOKEN: ${{ inputs.NODE_AUTH_TOKEN }}
     
